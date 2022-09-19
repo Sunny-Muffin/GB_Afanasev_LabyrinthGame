@@ -5,7 +5,7 @@ using static UnityEngine.Debug;
 
 namespace Labyrinth
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, ICharacter
     {
         [SerializeField] private float _speed;
 
