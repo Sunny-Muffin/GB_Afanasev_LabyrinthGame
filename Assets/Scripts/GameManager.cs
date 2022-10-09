@@ -1,45 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using TMPro;
 using UnityEngine;
-using static UnityEngine.Debug;
 
-public class GameManager : MonoBehaviour
+namespace Labyrinth
 {
-    private int a = 0;
-    private int b = 1;
-
-    private string aa = "null";
-    private string bb = "one";
-
-    void Start()
+    public class GameManager : MonoBehaviour
     {
-        Print(ref a, ref b);
-        Print(ref aa, ref bb);
+        [SerializeField] private TextMeshProUGUI _gameOverText;
+        private PlayerGameOver _playerGameOver;
+        private ListInteractableObject _listInteractableObject;
 
-        SwapInt(ref a, ref b);
-        Swap(ref aa, ref bb);
+        private void Awake()
+        {
+            _listInteractableObject = new ListInteractableObject();
+            try
+            {
+                _playerGameOver = new PlayerGameOver(_gameOverText);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("Caught exception: " + ex);
+            }
+            
+            foreach (var obj in _listInteractableObject)
+            {
+                if(obj is Mine mine)
+                {
+                    mine.CaughtPlayer += PlayerDeath; // вот тут заталкиваем методы в делегат
+                    mine.CaughtPlayer += _playerGameOver.GameOver;
+                }
+            }
+        }
 
-        Print(ref a, ref b);
-        Print(ref aa, ref bb);
-    }
+        private void PlayerDeath()
+        {
+            // particle system
+            // sound
+            Dispose(); // тут вызывать? √де вызывать то?
+            //Time.timeScale = 0.0f; // не хочу вызывать тут остановку времени, проблемы возникают, надо подумать как это обернуть
+        }
 
-    // seems like swaping without temporary variable doesn't work, if you use generic variables "T"
-    private void Swap<T>(ref T A, ref T B)
-    {
-        T temp = A;
-        A = B;
-        B = temp;
-    }
+        public void Dispose() // с диспоузом не разобралс€, где его вызывать то?
+        {
+            foreach (var o in _listInteractableObject)
+            {
+                if (o is InteractiveObject interactiveObject)
+                {
 
-    private void SwapInt(ref int A, ref int B)
-    {
-        A = A - B;
-        B = A + B;
-        A = -A + B;
-    }
-
-    private void Print<T>(ref T A, ref T B)
-    {
-        Log($"A = {A}, B = {B}");
+                    if (o is Mine mine)
+                    {
+                        mine.CaughtPlayer -= PlayerDeath; // тут методы удал€ютс€ из делегата, только вот где вызывать диспоуз?
+                        mine.CaughtPlayer -= _playerGameOver.GameOver;
+                    }
+                }
+            }
+        }
     }
 }
