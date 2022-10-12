@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Labyrinth.InteractiveObject;
 using static UnityEngine.Debug;
 
 namespace Labyrinth
@@ -8,6 +9,9 @@ namespace Labyrinth
     public class Player : MonoBehaviour, ICharacter
     {
         [SerializeField] private float _speed;
+
+        public delegate void PlayerWins(GameObject gameObject); // создаем делегат
+        public static event PlayerWins PlayerVictory; // экземпл€ром делегата будет событие
 
         private Rigidbody _rb;
         private int _keys = 0;
@@ -56,6 +60,7 @@ namespace Labyrinth
             if (_keys >= 2)
             {
                 Log($"{gameObject.name} wins!");
+                PlayerVictory?.Invoke(gameObject); // вызываем событие
             }
         }
     }

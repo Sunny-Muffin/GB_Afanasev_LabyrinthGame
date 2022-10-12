@@ -8,12 +8,17 @@ namespace Labyrinth
     {
         public delegate void CaughtPlayerChange(); // это делегат, который будет менять метод соприкосновения с игроком 
         public CaughtPlayerChange CaughtPlayer; // а это экземпляр делегата
+        public static event ObjectTouched OnTouched; // это событие
+
+        [SerializeField] private float cameraShakeTime = .4f;
+        [SerializeField] private float cameraShakeMagnitude = 1f;
 
         protected override void Interaction(Player player)
         {
             base.Interaction(player);
             try
             {
+                OnTouched?.Invoke(cameraShakeTime, cameraShakeMagnitude);
                 CaughtPlayer?.Invoke(); // а вот тут вызывается тот самый делегат, в который я натолкаю методов (или уже натолкал)
                 // если использовать знак "?" то можно без try catch, но я оставил для домашки
             }
