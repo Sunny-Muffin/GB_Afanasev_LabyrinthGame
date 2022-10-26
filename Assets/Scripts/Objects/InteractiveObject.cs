@@ -14,6 +14,10 @@ namespace Labyrinth
         
         public delegate void ObjectTouched(float time, float magnitude);
 
+        private void Awake()
+        {
+            SaveSystem.objects.Add(this); // adding object to save list
+        }
 
         private void Start()
         {
