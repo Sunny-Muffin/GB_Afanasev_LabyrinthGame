@@ -6,8 +6,8 @@ namespace Labyrinth
 {
     public class GoodObject : InteractiveObject
     {
-        [SerializeField] float speedBonus = 5f;
-        [SerializeField] float bonusTime = 5f;
+        [SerializeField, Tooltip ("Amount of speed, that will add to player's speed")] float speedBonus = 5f;
+        [SerializeField, Tooltip("Period of time, in witch bonus works")] float bonusTime = 5f;
 
         protected override void Interaction(Player player)
         {

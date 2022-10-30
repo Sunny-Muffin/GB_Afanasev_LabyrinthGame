@@ -8,7 +8,7 @@ namespace Labyrinth
 {
     public class Player : MonoBehaviour, ICharacter
     {
-        [SerializeField] private float _speed;
+        [SerializeField, Range(1,10)] private float _speed;
 
         public delegate void PlayerWins(GameObject gameObject); // создаем делегат
         public static event PlayerWins PlayerVictory; // экземпляром делегата будет событие

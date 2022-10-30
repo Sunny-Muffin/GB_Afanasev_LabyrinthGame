@@ -6,11 +6,11 @@ namespace Labyrinth
     [Serializable]
     public class InteractiveObject : MonoBehaviour
     {
-        public string Name;
-        public Vector3 position;
-        public float X;
-        public float Y;
-        public float Z;
+        [HideInInspector] public string Name;
+        [HideInInspector] public Vector3 position;
+        [HideInInspector] public float X;
+        [HideInInspector] public float Y;
+        [HideInInspector] public float Z;
         
         public delegate void ObjectTouched(float time, float magnitude);
 

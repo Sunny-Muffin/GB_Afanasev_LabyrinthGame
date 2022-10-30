@@ -10,8 +10,8 @@ namespace Labyrinth
         public CaughtPlayerChange CaughtPlayer; // а это экземпл€р делегата
         public static event ObjectTouched OnTouched; // это событие
 
-        [SerializeField] private float cameraShakeTime = .4f;
-        [SerializeField] private float cameraShakeMagnitude = 1f;
+        [SerializeField, Range(0, 1)] private float cameraShakeTime = .4f;
+        [SerializeField, Range(0, 2)] private float cameraShakeMagnitude = 1f;
 
         protected override void Interaction(Player player)
         {
