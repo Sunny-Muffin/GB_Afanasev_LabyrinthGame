@@ -7,27 +7,33 @@ using UnityEngine.UI;
 
 namespace Labyrinth
 {
-public class PlayerWin : MonoBehaviour
-{
-    [SerializeField] private GameObject _victoryScreen;
-    [SerializeField] private TextMeshProUGUI _winText;
-    private Player[] _playersList;
-
-    private void Awake()
+    public class PlayerWin : MonoBehaviour
     {
-        _victoryScreen.SetActive(false);
-        _winText.text = string.Empty;
-        _playersList = Object.FindObjectsOfType<Player>();
-        Player1.PlayerVictory += MakeWinScreen;
-        Player2.PlayerVictory += MakeWinScreen;
-    }
+        [SerializeField] private GameObject _victoryScreen;
+        [SerializeField] private TextMeshProUGUI _winText;
+        private Player[] _playersList;
 
-    public void MakeWinScreen(GameObject player)
-    {
-        _victoryScreen.SetActive(true);
-        _winText.text = $"{player.name} WINS!";
-        // it will be good to stop time here, or unbind players
-    }
+        private void Awake()
+        {
+            _victoryScreen.SetActive(false);
+            _winText.text = string.Empty;
+            _playersList = Object.FindObjectsOfType<Player>();
+            Player1.PlayerVictory += MakeWinScreen;
+            Player2.PlayerVictory += MakeWinScreen;
+        }
 
-}
+        public void MakeWinScreen(GameObject player)
+        {
+            _victoryScreen.SetActive(true);
+            _winText.text = $"{player.name} WINS!";
+            // it will be good to stop time here, or unbind players
+        }
+        
+        public void Dispose()
+        {
+            Player1.PlayerVictory -= MakeWinScreen;
+            Player2.PlayerVictory -= MakeWinScreen;
+            Debug.Log("&&&&&&&"); 
+        }
+    }
 }

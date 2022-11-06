@@ -35,12 +35,18 @@ namespace Labyrinth
                 Interaction(player);
                 Destroy(gameObject);
             }
-
+            (string name, float x, float y, float z) bonusInfo = GetBonus();
+            Debug.Log($"bonus name: {bonusInfo.name}, x = {bonusInfo.x}, y = {bonusInfo.y}, z = {bonusInfo.z}");
         }
 
         protected virtual void Interaction(Player player)
         {
             
+        }
+
+        public (string name, float x, float y, float z) GetBonus()
+        {
+            return (Name, X, Y, Z);
         }
     }
 }

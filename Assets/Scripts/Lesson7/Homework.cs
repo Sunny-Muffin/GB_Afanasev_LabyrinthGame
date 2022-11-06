@@ -33,13 +33,13 @@ namespace Lesson7
         // Start is called before the first frame update
         void Start()
         {
-            Debug.Log("Task 2"); // =======================================================================
+            //Debug.Log("Task 2"); // =======================================================================
             string text = "1234qwer!$%@"; // 12 sybols here
             var result = text.CountSymbols();
-            Debug.Log($"there are {result} symblos in a string");
+            //Debug.Log($"there are {result} symblos in a string");
 
 
-            Debug.Log("Task 3"); // =======================================================================
+            //Debug.Log("Task 3"); // =======================================================================
             // first I wanted to sort, find where age of person changes and simply nake ++ to counter
             var sortedPersons = from p in people
                                 orderby p.Age
@@ -50,15 +50,15 @@ namespace Lesson7
                          group pep by pep.Age;
             foreach (IGrouping<int, Person> g in groups)
             {
-                Debug.Log(g.Key);
+                //Debug.Log(g.Key);
                 foreach (var t in g)
                 {
-                    Debug.Log(t.Name);
+                    //Debug.Log(t.Name);
                 }
             }
 
 
-            Debug.Log("Task 4"); // =======================================================================
+            //Debug.Log("Task 4"); // =======================================================================
             Dictionary<string, int> dict = new Dictionary<string, int>()
             {
                 {"four",4 },
@@ -70,7 +70,7 @@ namespace Lesson7
             var d = dict.OrderBy(pair => pair.Value);
             foreach (var pair in d)
             {
-                Debug.Log($"{pair.Key} - {pair.Value}");
+                //Debug.Log($"{pair.Key} - {pair.Value}");
             }
         }
     }

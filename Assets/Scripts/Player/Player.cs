@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using static Labyrinth.InteractiveObject;
 using static UnityEngine.Debug;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Labyrinth
 {
     public class Player : MonoBehaviour, ICharacter
     {
         [SerializeField, Range(1,10)] private float _speed;
+        [SerializeField] private TextMeshProUGUI _speedText;
 
         public delegate void PlayerWins(GameObject gameObject); // создаем делегат
         public static event PlayerWins PlayerVictory; // экземпл€ром делегата будет событие
@@ -29,12 +33,15 @@ namespace Labyrinth
             {
                 //Log("Got rigidbody");
             }
+            _speedText.text = $"{_speed}";
         }
 
         public void IncreaseSpeed(float speedBonus, float bonusTime)
         {
             //Log("Increasing speed");
+            
             _speed *= speedBonus;
+            _speedText.text = $"{_speed}";
             StartCoroutine(DecreaseSpeed(speedBonus, bonusTime));
         }
 
@@ -44,6 +51,7 @@ namespace Labyrinth
             yield return new WaitForSeconds(bonusTime);
             //Log("Decreasing speed");
             _speed /= speedBonus;
+            _speedText.text = $"{_speed}";
         }
 
 
@@ -63,5 +71,7 @@ namespace Labyrinth
                 PlayerVictory?.Invoke(gameObject); // вызываем событие
             }
         }
+
+
     }
 }
